@@ -29,7 +29,7 @@
 
 #include "pgcompat.h"
 
-#include "doc/pygame_doc.h"
+#include "pygame_doc.h"
 
 #if defined(_WIN32)
 #define PG_LSEEK _lseeki64

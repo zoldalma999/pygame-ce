@@ -22,11 +22,11 @@
 
 #include <stddef.h>
 
-#include "palette.h"
+#include "../palette.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/pixelcopy_doc.h"
+#include "pixelcopy_doc.h"
 
 #include <SDL_endian.h>
 
@@ -41,7 +41,7 @@ typedef enum {
 
 #if !defined(BUILD_STATIC)
 
-#include "pygame.h"
+#include "../pygame.h"
 
 static int
 _validate_view_format(const char *format)

@@ -29,11 +29,11 @@
 
 #define PY_SSIZE_T_CLEAN
 #define PYGAMEAPI_BUFPROXY_INTERNAL
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 #include "pgbufferproxy.h"
-#include "doc/bufferproxy_doc.h"
+#include "bufferproxy_doc.h"
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 #define BUFPROXY_MY_ENDIAN '<'

@@ -1,10 +1,10 @@
 #define PYGAMEAPI_WINDOW_INTERNAL
 
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/sdl2_video_doc.h"
+#include "../_sdl2/video/video_doc.h"
 
 #ifndef PYGAMEAPI_DISPLAY_INTERNAL  // to pass the static check
 // Copied from display.c

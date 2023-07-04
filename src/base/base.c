@@ -22,12 +22,12 @@
 #define NO_PYGAME_C_API
 #define PYGAMEAPI_BASE_INTERNAL
 
-#include "pygame.h"
+#include "../pygame.h"
 
 #include <signal.h>
-#include "doc/pygame_doc.h"
+#include "pygame_doc.h"
 #include "pgarrinter.h"
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
 /* This file controls all the initialization of
  * the module and the various SDL subsystems

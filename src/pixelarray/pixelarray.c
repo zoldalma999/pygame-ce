@@ -20,13 +20,13 @@
 
 #define PYGAMEAPI_PIXELARRAY_INTERNAL
 
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/pixelarray_doc.h"
+#include "pixelarray_doc.h"
 
-#include "surface.h"
+#include "../surface/surface.h"
 #if !defined(BUILD_STATIC)
 static char FormatUint8[] = "B";
 static char FormatUint16[] = "=H";

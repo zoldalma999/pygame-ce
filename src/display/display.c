@@ -24,12 +24,12 @@
  *  pygame display module
  */
 #define PYGAMEAPI_DISPLAY_INTERNAL
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 #include "pgopengl.h"
 
-#include "doc/display_doc.h"
+#include "display_doc.h"
 
 #include <SDL_syswm.h>
 

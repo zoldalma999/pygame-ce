@@ -29,11 +29,11 @@
 #define PYGAMEAPI_MASK_INTERNAL 1
 #include "mask.h"
 
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/mask_doc.h"
+#include "mask_doc.h"
 
 #include "structmember.h"
 

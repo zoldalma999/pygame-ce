@@ -26,7 +26,7 @@
  *  the extended load and save functions, which are automatically used
  *  by the normal pygame.image module if it is available.
  */
-#include "pygame.h"
+#include "../pygame.h"
 
 /* Keep a stray macro from conflicting with python.h */
 #if defined(HAVE_PROTOTYPES)
@@ -44,11 +44,9 @@
 #define PNG_SKIP_SETJMP_CHECK
 #include <png.h>
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/image_doc.h"
-
-#include "pgopengl.h"
+#include "image_doc.h"
 
 #include <SDL_image.h>
 #ifdef WIN32

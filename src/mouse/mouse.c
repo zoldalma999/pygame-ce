@@ -23,11 +23,11 @@
 /*
  *  pygame mouse module
  */
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/mouse_doc.h"
+#include "mouse_doc.h"
 
 /* mouse module functions */
 static PyObject *

@@ -25,12 +25,12 @@
 
 #include "surface.h"
 
-#include "palette.h"
+#include "../palette.h"
 
 #include "structmember.h"
 #include "pgcompat.h"
-#include "doc/surface_doc.h"
-#include "pgbufferproxy.h"
+#include "surface_doc.h"
+#include "../bufferproxy/pgbufferproxy.h"
 
 /* stdint.h is missing from some versions of MSVC. */
 #ifdef _MSC_VER

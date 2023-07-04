@@ -23,11 +23,11 @@
 /*
  *  drawing module for pygame
  */
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/draw_doc.h"
+#include "draw_doc.h"
 
 #include <math.h>
 

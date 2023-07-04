@@ -27,11 +27,11 @@
 
 #include "SDL_syswm.h"
 
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/scrap_doc.h"
+#include "scrap_doc.h"
 
 #include "scrap.h"
 

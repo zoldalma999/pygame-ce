@@ -20,11 +20,11 @@
     pete@shinners.org
 */
 #define NO_PYGAME_C_API
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "scrap.h"
+#include "../scrap/scrap.h"
 
 /* macros used to create each constant */
 #define ADD_ERROR(x)                                      \

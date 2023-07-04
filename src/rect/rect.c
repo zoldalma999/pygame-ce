@@ -24,13 +24,13 @@
  *  Python Rect Object -- useful 2d rectangle class
  */
 #define PYGAMEAPI_RECT_INTERNAL
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "doc/rect_doc.h"
+#include "rect_doc.h"
 
 #include "structmember.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
 #include "pgcompat_rect.h"
 

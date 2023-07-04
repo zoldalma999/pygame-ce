@@ -31,13 +31,13 @@
 
 #define PYGAMEAPI_MATH_INTERNAL
 #define NO_PYGAME_C_API
-#include "doc/math_doc.h"
+#include "math_doc.h"
 
-#include "pygame.h"
+#include "../pygame.h"
 
 #include "structmember.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
 #include <float.h>
 #include <math.h>

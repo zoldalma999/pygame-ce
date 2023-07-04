@@ -23,11 +23,11 @@
 /*
  *  pygame-ce keyboard module
  */
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/key_doc.h"
+#include "key_doc.h"
 
 /* keyboard module functions */
 static PyObject *

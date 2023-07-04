@@ -24,11 +24,11 @@
  *  music module for pygame
  */
 #define PYGAMEAPI_MUSIC_INTERNAL
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/music_doc.h"
+#include "music_doc.h"
 
 #include "mixer.h"
 

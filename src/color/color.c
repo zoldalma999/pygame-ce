@@ -39,11 +39,11 @@
 
 #define PYGAMEAPI_COLOR_INTERNAL
 
-#include "doc/color_doc.h"
+#include "color_doc.h"
 
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
 #include <ctype.h>
 

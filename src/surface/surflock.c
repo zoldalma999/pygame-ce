@@ -26,9 +26,9 @@
  */
 #define PYGAMEAPI_SURFLOCK_INTERNAL
 
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
 static int
 pgSurface_Lock(pgSurfaceObject *);

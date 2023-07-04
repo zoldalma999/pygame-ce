@@ -26,11 +26,11 @@
  * object
  */
 #define PYGAMEAPI_RECT_INTERNAL
-#include "pygame.h"
+#include "../pygame.h"
 
 #include "structmember.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
 #include <limits.h>
 

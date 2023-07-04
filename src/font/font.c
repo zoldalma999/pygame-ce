@@ -29,11 +29,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/font_doc.h"
+#include "font_doc.h"
 
 #include "structmember.h"
 

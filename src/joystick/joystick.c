@@ -21,11 +21,11 @@
 */
 
 #define PYGAMEAPI_JOYSTICK_INTERNAL
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/joystick_doc.h"
+#include "joystick_doc.h"
 
 static pgJoystickObject *joylist_head = NULL;
 static PyTypeObject pgJoystick_Type;

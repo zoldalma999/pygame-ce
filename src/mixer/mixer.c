@@ -24,11 +24,11 @@
  *  mixer module for pygame
  */
 #define PYGAMEAPI_MIXER_INTERNAL
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/mixer_doc.h"
+#include "mixer_doc.h"
 
 #include "mixer.h"
 

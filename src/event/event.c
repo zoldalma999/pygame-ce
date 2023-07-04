@@ -25,11 +25,11 @@
  */
 #define PYGAMEAPI_EVENT_INTERNAL
 
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
-#include "doc/event_doc.h"
+#include "event_doc.h"
 
 #include "structmember.h"
 
