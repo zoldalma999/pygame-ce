@@ -286,7 +286,7 @@ from distutils.extension import read_setup_file
 from distutils.command.install_data import install_data
 from distutils.command.sdist import sdist
 
-revision = ''
+revision = '30cf75a0'
 
 
 def add_datafiles(data_files, dest_dir, pattern):
@@ -331,9 +331,10 @@ else:
     })
 
 # headers to install
-headers = glob.glob(os.path.join('src_c', '*.h'))
-headers.remove(os.path.join('src_c', 'scale.h'))
-headers.append(os.path.join('src_c', 'include'))
+headers = glob.glob(os.path.join('src', '*', '*.h'))
+print("\n".join(headers))
+headers.remove(os.path.join('src', 'transform', 'scale.h'))
+headers.append(os.path.join('src', 'include'))
 
 import distutils.command.install_headers
 
@@ -540,7 +541,7 @@ def parse_source_version():
     major_exp_search = re.compile(r'define\s+PG_MAJOR_VERSION\s+([0-9]+)').search
     minor_exp_search = re.compile(r'define\s+PG_MINOR_VERSION\s+([0-9]+)').search
     patch_exp_search = re.compile(r'define\s+PG_PATCH_VERSION\s+([0-9]+)').search
-    pg_header = os.path.join('src_c', 'include', '_pygame.h')
+    pg_header = os.path.join('src', 'include', '_pygame.h')
     with open(pg_header) as f:
         for line in f:
             if pgh_major == -1:
@@ -569,7 +570,7 @@ def write_version_module(pygame_version, revision):
                          ": %s vs %s" % (vernum, src_vernum))
     with open(os.path.join('buildconfig', 'version.py.in')) as header_file:
         header = header_file.read()
-    with open(os.path.join('src_py', 'version.py'), 'w') as version_file:
+    with open(os.path.join('src', 'version', 'version.py'), 'w') as version_file:
         version_file.write(header)
         version_file.write('ver = "' + pygame_version + '"  # pylint: disable=invalid-name\n')
         version_file.write(f'vernum = PygameVersion({vernum})\n')
@@ -1024,13 +1025,13 @@ PACKAGEDATA = {
                  'pygame.docs',
                  'pygame.examples',
                  'pygame.__pyinstaller'],
-    "package_dir": {'pygame': 'src_py',
-                    'pygame._sdl2': 'src_py/_sdl2',
-                    'pygame.threads': 'src_py/threads',
+    "package_dir": {'pygame': 'src',
+                    'pygame._sdl2': 'src/_sdl2',
+                    'pygame.threads': 'src/threads',
                     'pygame.tests': 'test',
                     'pygame.docs': 'docs',
                     'pygame.examples': 'examples',
-                    'pygame.__pyinstaller': 'src_py/__pyinstaller'},
+                    'pygame.__pyinstaller': 'src/__pyinstaller'},
     "headers": headers,
     "ext_modules": extensions,
     "data_files": data_files,
@@ -1038,11 +1039,11 @@ PACKAGEDATA = {
 }
 if STRIPPED:
     pygame_data_files = []
-    data_files = [('pygame', ["src_py/freesansbold.ttf",
-                              "src_py/pygame.ico",
-                              "src_py/pygame_icon.icns",
-                              "src_py/pygame_icon.bmp",
-                              "src_py/pygame_icon_mac.bmp"])]
+    data_files = [('pygame', ["src/pkgdata/freesansbold.ttf",
+                              "src/pkgdata/pygame.ico",
+                              "src/pkgdata/pygame_icon.icns",
+                              "src/pkgdata/pygame_icon.bmp",
+                              "src/pkgdata/pygame_icon_mac.bmp"])]
 
     PACKAGEDATA = {
         "cmdclass": cmdclass,
