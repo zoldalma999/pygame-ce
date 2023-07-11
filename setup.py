@@ -225,8 +225,8 @@ if compile_cython:
 
     import glob
 
-    pyx_files = glob.glob(os.path.join('src_c', 'cython', 'pygame', '*.pyx')) + \
-                glob.glob(os.path.join('src_c', 'cython', 'pygame', '**', '*.pyx'))
+    pyx_files = glob.glob(os.path.join('src', '*', '*.pyx')) \
+              + glob.glob(os.path.join('src', '_sdl2', '*', '*.pyx'))
 
     pyx_files, pyx_meta = create_extension_list(pyx_files, ctx=ctx)
     deps = create_dependency_tree(ctx)
@@ -236,9 +236,7 @@ if compile_cython:
     for ext in pyx_files:
         pyx_file = ext.sources[0]  # TODO: check all sources, extension
 
-        c_file = os.path.splitext(pyx_file)[0].split(os.path.sep)
-        del c_file[1:3]  # output in src_c/
-        c_file = os.path.sep.join(c_file) + '.c'
+        c_file = f"{os.path.splitext(pyx_file)[0]}.c"
 
         # update outdated .c files
         if os.path.isfile(c_file):
@@ -270,7 +268,7 @@ if compile_cython:
     for i, kwargs in enumerate(queue):
         kwargs['progress'] = f'[{i + 1}/{count}] '
         cythonize_one(**kwargs)
-    
+
     if cython_only:
         sys.exit(0)
 
@@ -332,7 +330,6 @@ else:
 
 # headers to install
 headers = glob.glob(os.path.join('src', '*', '*.h'))
-print("\n".join(headers))
 headers.remove(os.path.join('src', 'transform', 'scale.h'))
 headers.append(os.path.join('src', 'include'))
 
@@ -441,7 +438,7 @@ for e in extensions:
         e.extra_compile_args.append("/WX" if sys.platform == "win32" else "-Werror")
 
 # if not building font, try replacing with ftfont
-alternate_font = os.path.join('src_py', 'font.py')
+alternate_font = os.path.join('src', 'font' 'font.py')
 if os.path.exists(alternate_font):
     os.remove(alternate_font)
 
@@ -453,7 +450,7 @@ for e in extensions:
     if e.name == '_freetype':
         have_freetype = True
 if not have_font and have_freetype:
-    shutil.copyfile(os.path.join('src_py', 'ftfont.py'), alternate_font)
+    shutil.copyfile(os.path.join('src', 'freetype', 'ftfont.py'), alternate_font)
 
 # extra files to install
 data_path = os.path.join(distutils.sysconfig.get_python_lib(), 'pygame')
@@ -475,7 +472,7 @@ if _sdl2:
         _sdl2_data_files.append(type_file)
 
 # add non .py files in lib directory
-for f in glob.glob(os.path.join('src_py', '*')):
+for f in glob.glob(os.path.join('src', 'pkgdata', '*')):
     if not f[-3:] == '.py' and not f[-4:] == '.doc' and os.path.isfile(f):
         pygame_data_files.append(f)
 
@@ -1050,9 +1047,9 @@ if STRIPPED:
         "packages": ['pygame',
                      'pygame.threads',
                      'pygame._sdl2'],
-        "package_dir": {'pygame': 'src_py',
-                        'pygame._sdl2': 'src_py/_sdl2',
-                        'pygame.threads': 'src_py/threads'},
+        "package_dir": {'pygame': 'src',
+                        'pygame._sdl2': 'src/_sdl2',
+                        'pygame.threads': 'src/threads'},
         "ext_modules": extensions,
         "zip_safe": False,
         "data_files": data_files
@@ -1061,6 +1058,18 @@ if STRIPPED:
 PACKAGEDATA.update(METADATA)
 PACKAGEDATA.update(EXTRAS)
 
+dont_include = ['src\\__pyinstaller\\hook-pygame.py', 'src\\__pyinstaller\\__init__.py', 'src\\threads\\__init__.py', 'src\\_sdl2\\__init__.py']
+
+from rich import print
+for name, items in PACKAGEDATA['data_files']:
+    if name == 'pygame':
+        # find all .py files
+        for file in glob.glob(os.path.join("src", "**", "*.py")):
+            if file not in dont_include:
+                items.append(file)
+
+print(PACKAGEDATA)
+# exit()
 try:
     setup(**PACKAGEDATA)
 except:

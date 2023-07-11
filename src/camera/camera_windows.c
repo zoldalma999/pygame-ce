@@ -35,7 +35,7 @@
  */
 
 #include "_camera.h"
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
 /*these are already included in camera.h, but having them here
  * makes all the types be recognized by VS code */

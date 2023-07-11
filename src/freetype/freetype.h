@@ -20,8 +20,8 @@
 #ifndef _PYGAME_FREETYPE_INTERNAL_H_
 #define _PYGAME_FREETYPE_INTERNAL_H_
 
-#include "pgcompat.h"
-#include "pgplatform.h"
+#include "../pgcompat.h"
+#include "../pgplatform.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H

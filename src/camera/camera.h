@@ -19,9 +19,9 @@
 
 */
 
-#include "pygame.h"
-#include "pgcompat.h"
-#include "doc/camera_doc.h"
+#include "../pygame.h"
+#include "../pgcompat.h"
+#include "camera_doc.h"
 
 #if defined(__unix__)
 #include <structmember.h>

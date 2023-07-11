@@ -32,15 +32,15 @@ mixer_music src/mixer/music.c  $(SDL) $(MIXER) $(DEBUG)
 scrap src/scrap/scrap.c  $(SDL) $(SCRAP) $(DEBUG)
 pypm src/pypm/pypm.c  $(SDL) $(PORTMIDI) $(PORTTIME) $(DEBUG)
 
-_sdl2.sdl2 src/_sdl2/sdl2/sdl2.c  $(SDL) $(DEBUG) -Isrc_c
-_sdl2.audio src/_sdl2/audio/audio.c  $(SDL) $(DEBUG) -Isrc_c
-_sdl2.video src/_sdl2/video/video.c src_c/pgcompat.c  $(SDL) $(DEBUG) -Isrc_c
-_sdl2.mixer src/_sdl2/mixer/mixer.c  $(SDL) $(MIXER) $(DEBUG) -Isrc_c
-_sdl2.touch src/_sdl2/touch/touch.c  $(SDL) $(DEBUG) -Isrc_c
-_sdl2.controller_old src/_sdl2/controller/controller_old.c  $(SDL) $(DEBUG) -Isrc_c
+_sdl2.sdl2 src/_sdl2/sdl2/sdl2.c  $(SDL) $(DEBUG) -Isrc
+_sdl2.audio src/_sdl2/audio/audio.c  $(SDL) $(DEBUG) -Isrc
+_sdl2.video src/_sdl2/video/video.c src/pgcompat.c  $(SDL) $(DEBUG) -Isrc
+_sdl2.mixer src/_sdl2/mixer/mixer.c  $(SDL) $(MIXER) $(DEBUG) -Isrc
+_sdl2.touch src/_sdl2/touch/touch.c  $(SDL) $(DEBUG) -Isrc
+_sdl2.controller_old src/_sdl2/controller/controller_old.c  $(SDL) $(DEBUG) -Isrc
 
 GFX = src/gfxdraw/SDL_gfx/SDL_gfxPrimitives.c
-#GFX = src_c/SDL_gfx/SDL_gfxBlitFunc.c src_c/SDL_gfx/SDL_gfxPrimitives.c
+#GFX = src/gfxdraw/SDL_gfx/SDL_gfxBlitFunc.c src/gfxdraw/SDL_gfx/SDL_gfxPrimitives.c
 gfxdraw src/gfxdraw/gfxdraw.c  $(SDL) $(GFX) $(DEBUG)
 
 #optional freetype module (do not break in multiple lines
@@ -62,7 +62,7 @@ mouse src/mouse/mouse.c  $(SDL) $(DEBUG)
 rect src/rect/rect.c src/rect/pgcompat_rect.c  $(SDL) $(DEBUG)
 rwobject src/base/rwobject.c  $(SDL) $(DEBUG)
 surface src/surface/simd_blitters_sse2.c src/surface/simd_blitters_avx2.c src/surface/surface.c src/surface/alphablit.c src/surface/surface_fill.c  $(SDL) $(DEBUG)
-surflock src/surf/surflock.c  $(SDL) $(DEBUG)
+surflock src/surface/surflock.c  $(SDL) $(DEBUG)
 time src/time/time.c  $(SDL) $(DEBUG)
 joystick src/joystick/joystick.c  $(SDL) $(DEBUG)
 draw src/draw/draw.c  $(SDL) $(DEBUG)

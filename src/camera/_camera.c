@@ -35,7 +35,7 @@
  */
 
 #include "camera.h"
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
 /*
 #if defined(__unix__) || !defined(__APPLE__)

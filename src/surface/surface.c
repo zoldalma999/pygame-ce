@@ -28,7 +28,7 @@
 #include "../palette.h"
 
 #include "structmember.h"
-#include "pgcompat.h"
+#include "../pgcompat.h"
 #include "surface_doc.h"
 #include "../bufferproxy/pgbufferproxy.h"
 

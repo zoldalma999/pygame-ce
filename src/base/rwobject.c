@@ -25,9 +25,9 @@
  */
 #define NO_PYGAME_C_API
 #define PYGAMEAPI_RWOBJECT_INTERNAL
-#include "pygame.h"
+#include "../pygame.h"
 
-#include "pgcompat.h"
+#include "../pgcompat.h"
 
 #include "pygame_doc.h"
 
