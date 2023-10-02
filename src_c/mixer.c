@@ -104,6 +104,14 @@ struct ChannelData {
     PyObject *sound;
     PyObject *queue;
     int endevent;
+    // set_source_location input distance, saved here because Mix_SetPosition
+    // only applies once
+    Uint8 location_distance;
+    // set_source_location input angle, saved here because Mix_SetPosition only
+    // applies once
+    Sint16 location_angle;
+    // whether set_source_location has set a distance and angle
+    int has_location;
 };
 static struct ChannelData *channeldata = NULL;
 static int numchanneldata = 0;
@@ -284,6 +292,40 @@ _pg_push_mixer_event(int type, int code)
     PyGILState_Release(gstate);
 }
 
+/*
+Play a Mix_Chunk on a specific channel. Does not need the GIL to be held.
+Channel of -1 (find an empty one) is not allowed. If fade_ms is non-negative,
+this function will use Mix_FadeInChannelTimed else Mix_PlayChannelTimed. The
+return value will be the channel the sound was played, -1 if the sound could
+not be played or -2 if there was an other error (set with Mix_SetError). If
+there was no error, the channel is tagged as well.
+*/
+static int
+_play_chunk_on_channel(int channel, Mix_Chunk *chunk, int loops, int maxtime,
+                       int fade_ms)
+{
+    assert(channel >= 0);
+    int channelnum = 0;
+
+    if (channeldata[channel].has_location) {
+        if (!Mix_SetPosition(channel, channeldata[channel].location_angle,
+                             channeldata[channel].location_distance)) {
+            return -2;
+        }
+    }
+    if (fade_ms > 0) {
+        channelnum =
+            Mix_FadeInChannelTimed(channel, chunk, loops, fade_ms, maxtime);
+    }
+    else {
+        channelnum = Mix_PlayChannelTimed(channel, chunk, loops, maxtime);
+    }
+    if (channelnum != -1) {
+        Mix_GroupChannel(channelnum, (int)(intptr_t)chunk);
+    }
+    return channelnum;
+}
+
 static void
 endsound_callback(int channel)
 {
@@ -293,15 +335,12 @@ endsound_callback(int channel)
 
         if (channeldata[channel].queue) {
             PyGILState_STATE gstate = PyGILState_Ensure();
-            int channelnum;
             Mix_Chunk *sound = pgSound_AsChunk(channeldata[channel].queue);
             Py_XDECREF(channeldata[channel].sound);
             channeldata[channel].sound = channeldata[channel].queue;
             channeldata[channel].queue = NULL;
             PyGILState_Release(gstate);
-            channelnum = Mix_PlayChannelTimed(channel, sound, 0, -1);
-            if (channelnum != -1)
-                Mix_GroupChannel(channelnum, (int)(intptr_t)sound);
+            _play_chunk_on_channel(channel, sound, 0, -1, -1);
         }
         else {
             PyGILState_STATE gstate = PyGILState_Ensure();
@@ -420,6 +459,9 @@ _init(int freq, int size, int channels, int chunk, char *devicename,
                 channeldata[i].sound = NULL;
                 channeldata[i].queue = NULL;
                 channeldata[i].endevent = 0;
+                channeldata[i].location_angle = 0;
+                channeldata[i].location_distance = 0;
+                channeldata[i].has_location = 0;
             }
         }
 
@@ -1032,16 +1074,16 @@ chan_play(PyObject *self, PyObject *args, PyObject *kwargs)
     CHECK_CHUNK_VALID(chunk, NULL);
 
     Py_BEGIN_ALLOW_THREADS;
-    if (fade_ms > 0) {
-        channelnum = Mix_FadeInChannelTimed(channelnum, chunk, loops, fade_ms,
-                                            playtime);
-    }
-    else {
-        channelnum = Mix_PlayChannelTimed(channelnum, chunk, loops, playtime);
-    }
-    if (channelnum != -1)
-        Mix_GroupChannel(channelnum, (int)(intptr_t)chunk);
+    channelnum =
+        _play_chunk_on_channel(channelnum, chunk, loops, playtime, fade_ms);
     Py_END_ALLOW_THREADS;
+
+    if (channelnum == -1) {
+        return RAISE(pgExc_SDLError, "Could not play sound on this channel.");
+    }
+    else if (channelnum == -2) {
+        return RAISE(pgExc_SDLError, Mix_GetError());
+    }
 
     Py_XDECREF(channeldata[channelnum].sound);
     Py_XDECREF(channeldata[channelnum].queue);
@@ -1077,10 +1119,16 @@ chan_queue(PyObject *self, PyObject *sound)
     if (!channeldata[channelnum].sound) /*nothing playing*/
     {
         Py_BEGIN_ALLOW_THREADS;
-        channelnum = Mix_PlayChannelTimed(channelnum, chunk, 0, -1);
-        if (channelnum != -1)
-            Mix_GroupChannel(channelnum, (int)(intptr_t)chunk);
+        channelnum = _play_chunk_on_channel(channelnum, chunk, 0, -1, -1);
         Py_END_ALLOW_THREADS;
+
+        if (channelnum == -1) {
+            return RAISE(pgExc_SDLError,
+                         "Could not play sound on this channel.");
+        }
+        else if (channelnum == -2) {
+            return RAISE(pgExc_SDLError, Mix_GetError());
+        }
 
         channeldata[channelnum].sound = sound;
         Py_INCREF(sound);
@@ -1157,12 +1205,11 @@ chan_set_source_location(PyObject *self, PyObject *args)
 {
     int channelnum = pgChannel_AsInt(self);
     Sint16 angle;
-    float angle_f;
+    float angle_f = 0;
     Uint8 distance;
-    float distance_f;
-    PyThreadState *_save;
+    float distance_f = 0;
 
-    if (!PyArg_ParseTuple(args, "ff", &angle_f, &distance_f))
+    if (!PyArg_ParseTuple(args, "|ff", &angle_f, &distance_f))
         return NULL;
 
     angle = (Sint16)roundf(fmodf(angle_f, 360));
@@ -1174,12 +1221,9 @@ chan_set_source_location(PyObject *self, PyObject *args)
     distance = (Uint8)distance_f;
 
     MIXER_INIT_CHECK();
-    _save = PyEval_SaveThread();
-    if (!Mix_SetPosition(channelnum, angle, distance)) {
-        PyEval_RestoreThread(_save);
-        return RAISE(pgExc_SDLError, Mix_GetError());
-    }
-    PyEval_RestoreThread(_save);
+    channeldata[channelnum].location_distance = distance;
+    channeldata[channelnum].location_angle = angle;
+    channeldata[channelnum].has_location = !(angle == 0 && distance == 0);
     Py_RETURN_NONE;
 }
 
