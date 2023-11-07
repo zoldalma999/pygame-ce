@@ -1060,7 +1060,7 @@ PACKAGEDATA.update(EXTRAS)
 
 dont_include = ['src\\__pyinstaller\\hook-pygame.py', 'src\\__pyinstaller\\__init__.py', 'src\\threads\\__init__.py', 'src\\_sdl2\\__init__.py']
 
-from rich import print
+# from rich import print
 for name, items in PACKAGEDATA['data_files']:
     if name == 'pygame':
         # find all .py files
@@ -1068,7 +1068,6 @@ for name, items in PACKAGEDATA['data_files']:
             if file not in dont_include:
                 items.append(file)
 
-print(PACKAGEDATA)
 # exit()
 try:
     setup(**PACKAGEDATA)

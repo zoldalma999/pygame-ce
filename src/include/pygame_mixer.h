@@ -30,6 +30,40 @@
 
 struct Mix_Chunk;
 
+typedef enum {
+    pgEffect_VolumeID,
+    pgEffect_PositionID,
+    pgEffect_RevereseStereoID,
+    pgEffect_CustomID,
+} pgEffect_Id;
+
+/* Mix_SetPanning */
+typedef struct {
+    Uint8 left;
+    Uint8 right;
+} pgEffect_Volume;
+
+/* Mix_SetPosition */
+typedef struct {
+    Sint16 angle;
+    Uint8 distance;
+} pgEffect_Position;
+
+/* Mix_SetReverseStereo */
+typedef struct {
+    int flipped;
+} pgEffect_RevereseStereo;
+
+typedef struct {
+    pgEffect_Id id;
+
+    Mix_EffectFunc_t func;
+    Mix_EffectDone_t done;
+    void *data;
+
+    struct pgEffect *next;
+} pgEffect;
+
 typedef struct {
     PyObject_HEAD Mix_Chunk *chunk;
     Uint8 *mem;
@@ -37,7 +71,12 @@ typedef struct {
 } pgSoundObject;
 
 typedef struct {
-    PyObject_HEAD int chan;
+    PyObject_HEAD int id;
+    int chan;
+    int endevent;
+    pgSoundObject *sound;
+    pgSoundObject *queue;
+    pgEffect *effect_head;
 } pgChannelObject;
 
 #define pgSound_AsChunk(x) (((pgSoundObject *)x)->chunk)
