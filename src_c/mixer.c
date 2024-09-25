@@ -2083,14 +2083,14 @@ MODINIT_DEFINE(mixer)
         return NULL;
     }
     Py_INCREF(&pgChannel_Type);
-    if (PyModule_AddObject(module, "ChannelType",
-                           (PyObject *)&pgChannel_Type)) {
+    if (PyModule_AddObject(module, "Channel", (PyObject *)&pgChannel_Type)) {
         Py_DECREF(&pgChannel_Type);
         Py_DECREF(module);
         return NULL;
     }
     Py_INCREF(&pgChannel_Type);
-    if (PyModule_AddObject(module, "Channel", (PyObject *)&pgChannel_Type)) {
+    if (PyModule_AddObject(module, "ChannelType",
+                           (PyObject *)&pgChannel_Type)) {
         Py_DECREF(&pgChannel_Type);
         Py_DECREF(module);
         return NULL;

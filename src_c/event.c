@@ -2314,13 +2314,13 @@ MODINIT_DEFINE(event)
     }
 
     Py_INCREF(&pgEvent_Type);
-    if (PyModule_AddObject(module, "EventType", (PyObject *)&pgEvent_Type)) {
+    if (PyModule_AddObject(module, "Event", (PyObject *)&pgEvent_Type)) {
         Py_DECREF(&pgEvent_Type);
         Py_DECREF(module);
         return NULL;
     }
     Py_INCREF(&pgEvent_Type);
-    if (PyModule_AddObject(module, "Event", (PyObject *)&pgEvent_Type)) {
+    if (PyModule_AddObject(module, "EventType", (PyObject *)&pgEvent_Type)) {
         Py_DECREF(&pgEvent_Type);
         Py_DECREF(module);
         return NULL;

@@ -1963,13 +1963,13 @@ MODINIT_DEFINE(_camera)
     }
 
     Py_INCREF(&pgCamera_Type);
-    if (PyModule_AddObject(module, "CameraType", (PyObject *)&pgCamera_Type)) {
+    if (PyModule_AddObject(module, "Camera", (PyObject *)&pgCamera_Type)) {
         Py_DECREF(&pgCamera_Type);
         Py_DECREF(module);
         return NULL;
     }
     Py_INCREF(&pgCamera_Type);
-    if (PyModule_AddObject(module, "Camera", (PyObject *)&pgCamera_Type)) {
+    if (PyModule_AddObject(module, "CameraType", (PyObject *)&pgCamera_Type)) {
         Py_DECREF(&pgCamera_Type);
         Py_DECREF(module);
         return NULL;

@@ -802,25 +802,25 @@ MODINIT_DEFINE(rect)
     }
 
     Py_INCREF(&pgRect_Type);
-    if (PyModule_AddObject(module, "RectType", (PyObject *)&pgRect_Type)) {
-        Py_DECREF(&pgRect_Type);
-        Py_DECREF(module);
-        return NULL;
-    }
-    Py_INCREF(&pgRect_Type);
     if (PyModule_AddObject(module, "Rect", (PyObject *)&pgRect_Type)) {
         Py_DECREF(&pgRect_Type);
         Py_DECREF(module);
         return NULL;
     }
-    Py_INCREF(&pgFRect_Type);
-    if (PyModule_AddObject(module, "FRectType", (PyObject *)&pgFRect_Type)) {
-        Py_DECREF(&pgFRect_Type);
+    Py_INCREF(&pgRect_Type);
+    if (PyModule_AddObject(module, "RectType", (PyObject *)&pgRect_Type)) {
+        Py_DECREF(&pgRect_Type);
         Py_DECREF(module);
         return NULL;
     }
     Py_INCREF(&pgFRect_Type);
     if (PyModule_AddObject(module, "FRect", (PyObject *)&pgFRect_Type)) {
+        Py_DECREF(&pgFRect_Type);
+        Py_DECREF(module);
+        return NULL;
+    }
+    Py_INCREF(&pgFRect_Type);
+    if (PyModule_AddObject(module, "FRectType", (PyObject *)&pgFRect_Type)) {
         Py_DECREF(&pgFRect_Type);
         Py_DECREF(module);
         return NULL;

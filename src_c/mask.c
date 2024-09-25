@@ -2623,14 +2623,14 @@ MODINIT_DEFINE(mask)
         return NULL;
     }
     Py_INCREF(&pgMask_Type);
-    if (PyModule_AddObject(module, "MaskType", (PyObject *)&pgMask_Type)) {
+    if (PyModule_AddObject(module, "Mask", (PyObject *)&pgMask_Type)) {
         Py_DECREF(&pgMask_Type);
         Py_DECREF(module);
         return NULL;
     }
 
     Py_INCREF(&pgMask_Type);
-    if (PyModule_AddObject(module, "Mask", (PyObject *)&pgMask_Type)) {
+    if (PyModule_AddObject(module, "MaskType", (PyObject *)&pgMask_Type)) {
         Py_DECREF(&pgMask_Type);
         Py_DECREF(module);
         return NULL;

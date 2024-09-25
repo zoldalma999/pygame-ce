@@ -3979,15 +3979,15 @@ MODINIT_DEFINE(surface)
         return NULL;
     }
     Py_INCREF(&pgSurface_Type);
-    if (PyModule_AddObject(module, "SurfaceType",
-                           (PyObject *)&pgSurface_Type)) {
+    if (PyModule_AddObject(module, "Surface", (PyObject *)&pgSurface_Type)) {
         Py_DECREF(&pgSurface_Type);
         Py_DECREF(module);
         return NULL;
     }
 
     Py_INCREF(&pgSurface_Type);
-    if (PyModule_AddObject(module, "Surface", (PyObject *)&pgSurface_Type)) {
+    if (PyModule_AddObject(module, "SurfaceType",
+                           (PyObject *)&pgSurface_Type)) {
         Py_DECREF(&pgSurface_Type);
         Py_DECREF(module);
         return NULL;
