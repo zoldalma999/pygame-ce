@@ -12,8 +12,6 @@ base = py.extension_module(
 )
 endif
 
-# TODO: support SDL3
-if sdl_api != 3
 color = py.extension_module(
     'color',
     'color.c',
@@ -22,7 +20,6 @@ color = py.extension_module(
     install: true,
     subdir: pg,
 )
-endif
 
 # TODO: support SDL3
 if sdl_api != 3
@@ -93,8 +90,6 @@ rect = py.extension_module(
     subdir: pg,
 )
 
-# TODO: support SDL3
-if sdl_api != 3
 rwobject = py.extension_module(
     'rwobject',
     'rwobject.c',
@@ -103,7 +98,6 @@ rwobject = py.extension_module(
     install: true,
     subdir: pg,
 )
-endif
 
 # TODO: support SDL3
 if sdl_api != 3
@@ -324,8 +318,6 @@ newbuffer = py.extension_module(
 )
 
 # new/experimental/uncommon stuff, but built by default
-# TODO: support SDL3
-if sdl_api != 3
 system = py.extension_module(
     'system',
     'system.c',
@@ -334,7 +326,6 @@ system = py.extension_module(
     install: true,
     subdir: pg,
 )
-endif
 
 geometry = py.extension_module(
     'geometry',
