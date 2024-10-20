@@ -37,6 +37,7 @@ autoapi_generate_api_docs = False
 autoapi_python_use_implicit_namespaces = True
 autodoc_typehints = 'none'
 suppress_warnings = ['autoapi.python_import_resolution']
+autodoc_member_order = 'bysource'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

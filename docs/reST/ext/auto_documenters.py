@@ -1,13 +1,27 @@
 import autoapi
 import autoapi.documenters
-from rich import print
-from autoapi._objects import PythonObject
+from autoapi._objects import PythonClass
 
 
-def build_signatures(object: PythonObject):
+def build_signatures(object):
     name = object.short_name
-    if hasattr(object, "constructor"):
-        object = object.constructor
+
+    if isinstance(object, PythonClass):
+        if object.constructor is not None:
+            object = object.constructor
+            object.obj["return_annotation"] = name
+            object.obj["overloads"] = [
+                (arg, name) for arg, _ in object.obj["overloads"]
+            ]
+
+        else:
+            for child in object.children:
+                if child.short_name == "__new__":
+                    object = child
+                    break
+
+    if object is None:
+        return
 
     sigs = [(object.obj["args"], object.obj["return_annotation"])]
     sigs.extend(object.obj["overloads"])
@@ -26,7 +40,10 @@ def build_signatures(object: PythonObject):
         if arg_string:
             arg_string = arg_string[2:]
 
-        yield f"| :sg:`{name}({arg_string})`"
+        if ret.count("[") > 2 or ret.count(",") > 3:
+            ret = "..."
+
+        yield f"| :sg:`{name}({arg_string}) -> {ret}`"
 
 
 class AutopgDocumenter(autoapi.documenters.AutoapiDocumenter):
@@ -56,6 +73,12 @@ class AutopgDocumenter(autoapi.documenters.AutoapiDocumenter):
 
             if "args" in self.object.obj or hasattr(self.object, "constructor"):
                 yield from build_signatures(self.object)
+            else:
+                annotation = self.object.obj.get("annotation", None)
+                if annotation is not None:
+                    if annotation.count("[") > 2 or annotation.count(",") > 3:
+                        annotation = "..."
+                    yield f"| :sg:`{self.object.short_name} -> {annotation}`"
 
             yield from docstring[1:]
 

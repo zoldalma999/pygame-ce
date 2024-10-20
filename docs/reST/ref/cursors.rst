@@ -3,22 +3,11 @@
 :mod:`pygame.cursors`
 =====================
 
-.. module:: pygame.cursors
-   :synopsis: pygame module for cursor resources
-
 .. autopgmodule:: pygame.cursors
-
-.. autopgfunction:: compile
-
-.. autopgfunction:: load_xbm
+   :members: compile, load_xbm
 
 .. autopgclass:: Cursor
-
-   .. autopgmethod:: copy
-
-   .. autopgattribute:: type
-
-   .. autopgattribute:: data
+   :members: copy, type, data
 
 Example code for creating and settings cursors. (Click the mouse to switch cursor)
 

@@ -35,7 +35,7 @@ single tuple you can call like this:
 ::
 
    >>> pygame.mouse.set_cursor(*pygame.cursors.arrow)
-   
+
 The following variables can be passed to ``pygame.mouse.set_cursor`` function:
 
    * ``pygame.cursors.arrow``
@@ -67,7 +67,7 @@ The following strings can be converted into cursor bitmaps with
    * ``pygame.cursors.sizer_y_strings``
 
    * ``pygame.cursors.sizer_xy_strings``
-   
+
    * ``pygame.cursor.textmarker_strings``
 """
 
