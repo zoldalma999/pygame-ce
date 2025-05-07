@@ -1,6 +1,6 @@
 /* Auto generated file: with make_docs.py .  Docs go in docs/reST/ref/ . */
-#define DOC_SDL2_TOUCH "pygame module to work with touch input"
-#define DOC_SDL2_TOUCH_GETNUMDEVICES "get_num_devices() -> int\nget the number of touch devices"
-#define DOC_SDL2_TOUCH_GETDEVICE "get_device(index) -> touchid\nget the a touch device id for a given index"
-#define DOC_SDL2_TOUCH_GETNUMFINGERS "get_num_fingers(touchid) -> int\nthe number of active fingers for a given touch device"
-#define DOC_SDL2_TOUCH_GETFINGER "get_finger(touchid, index) -> dict | None\nget information about an active finger"
+#define DOC_SDL2_TOUCH "pygame._sdl2.touch\n\n\n\npygame module to work with touch input\n\nNew in pygame 2: This module requires SDL2."
+#define DOC_SDL2_TOUCH_GETNUMDEVICES "pygame._sdl2.touch.get_num_devices()\n\nget the number of touch devices\n\nget_num_devices() -> int\n\nReturn the number of available touch devices."
+#define DOC_SDL2_TOUCH_GETDEVICE "pygame._sdl2.touch.get_device()\n\nget the a touch device id for a given index\n\nget_device(index) -> touchid\n\nParameters\n\nindex (int) -- This number is at least 0 and less than the\nnumber of devices.\n\nReturn an integer id associated with the given index."
+#define DOC_SDL2_TOUCH_GETNUMFINGERS "pygame._sdl2.touch.get_num_fingers()\n\nthe number of active fingers for a given touch device\n\nget_num_fingers(touchid) -> int\n\nReturn the number of fingers active for the touch device\nwhose id is touchid."
+#define DOC_SDL2_TOUCH_GETFINGER "pygame._sdl2.touch.get_finger()\n\nget information about an active finger\n\nget_finger(touchid, index) -> dict | None\n\nParameters\n\ntouchid (int) -- The touch device id.\n\nindex (int) -- The index of the finger to return\ninformation about, between 0 and the\nnumber of active fingers.\n\nReturn a dict for the finger index active on touchid, or None if the\nobject does not exist.\nThe dict contains these keys:\n\nid         the id of the finger (an integer).\nx          the normalized x position of the finger, between 0 and 1.\ny          the normalized y position of the finger, between 0 and 1.\npressure   the amount of pressure applied by the finger, between 0 and 1."

@@ -1,4 +1,4 @@
-from ext.utils import get_sectionname, isections
+from ext.utils import isections
 from ext.indexer import tour_descinfo
 
 import os
@@ -43,6 +43,15 @@ def writer(app, pagename, templatename, context, doctree):
     filepath = os.path.join(dirpath, filename)
     template = app.config["headers_template"]
     header = open(filepath, "w", encoding="utf-8")
+
+    for item in items:
+        item["full_docs"] = (
+            item["full_docs"]
+            .replace("\\", "\\\\")
+            .replace('"', '\\"')
+            .replace("\n", "\\n")
+        )
+
     context["hdr_items"] = items
     try:
         header.write(templates.render(template, context))

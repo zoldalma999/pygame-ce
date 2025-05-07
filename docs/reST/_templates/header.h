@@ -19,5 +19,5 @@
 
 /* Auto generated file: with make_docs.py .  Docs go in docs/reST/ref/ . */
 {% for item in hdr_items -%}
-#define {{ cmacro(item) }} "{{ join_sigs(item) }}{{ item['summary'] }}"
+#define {{ cmacro(item) }} "{{ item['full_docs'] }}"
 {% endfor %}
