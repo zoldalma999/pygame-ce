@@ -15,10 +15,10 @@ class SoftwareVersion(tuple[int, int, int]):
 class PygameVersion(SoftwareVersion): ...
 class SDLVersion(SoftwareVersion): ...
 
-SDL: SDLVersion
 ver: str
 vernum: PygameVersion
 rev: str
+SDL: SDLVersion
 
 # keep in sync with version.py
 __all__ = ["SDL", "ver", "vernum", "rev"]

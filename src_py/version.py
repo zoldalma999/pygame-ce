@@ -18,13 +18,10 @@
 ##    Pete Shinners
 ##    pete@shinners.org
 
-"""Simply the current installed pygame version. The version information is
-stored in the regular pygame module as 'pygame.ver'. Keeping the version
-information also available in a separate module allows you to test the
-pygame version without importing the main pygame module.
+"""Pygame module containing version information.
 
-The python version information should always compare greater than any previous
-releases. (hmm, until we get to versions > 10)
+This module is automatically imported into the pygame package and can be used to
+check which version of pygame has been imported.
 """
 
 from pygame.base import __version__, get_sdl_version
@@ -67,9 +64,78 @@ class SDLVersion(SoftwareVersion):
 
 _sdl_tuple = get_sdl_version()
 SDL = SDLVersion(_sdl_tuple[0], _sdl_tuple[1], _sdl_tuple[2])
+"""Tupled integers of the SDL library version.
+
+This is the SDL library version represented as an extended tuple. It also has
+attributes 'major', 'minor' & 'patch' that can be accessed like this:
+
+::
+
+    >>> pygame.version.SDL.major
+    2
+
+printing the whole thing returns a string like this:
+
+::
+
+    >>> pygame.version.SDL
+    SDLVersion(major=2, minor=26, patch=5)
+
+.. versionaddedold:: 2.0.0
+"""
 
 ver = __version__  # pylint: disable=invalid-name
+"""Version number as a string.
+
+This is the version represented as a string. It can contain a micro release
+number as well, e.g. ``'1.5.2'``.
+"""
+
 vernum = PygameVersion(*map(int, ver.split(".")[:3]))
+"""Tupled integers of the version.
+
+This version information can easily be compared with other version
+numbers of the same format. An example of checking pygame version numbers
+would look like this:
+
+::
+
+    if pygame.version.vernum < (1, 5):
+        print('Warning, older version of pygame (%s)' %  pygame.version.ver)
+        disable_advanced_features = True
+
+.. versionaddedold:: 1.9.6 Attributes ``major``, ``minor``, and ``patch``.
+
+::
+
+    vernum.major == vernum[0]
+    vernum.minor == vernum[1]
+    vernum.patch == vernum[2]
+
+.. versionchangedold:: 1.9.6
+    ``str(pygame.version.vernum)`` returns a string like ``"2.0.0"`` instead
+    of ``"(2, 0, 0)"``.
+
+.. versionchangedold:: 1.9.6
+    ``repr(pygame.version.vernum)`` returns a string like
+    ``"PygameVersion(major=2, minor=0, patch=0)"`` instead of ``"(2, 0, 0)"``.
+"""
+
 rev = ""  # pylint: disable=invalid-name
+"""Repository revision of the build.
+
+The Mercurial node identifier of the repository checkout from which this
+package was built. If the identifier ends with a plus sign '+' then the
+package contains uncommitted changes. Please include this revision number
+in bug reports, especially for non-release pygame builds.
+
+Important note: pygame development has moved to github, this variable is
+obsolete now. As soon as development shifted to github, this variable started
+returning an empty string ``""``.
+It has always been returning an empty string since ``v1.9.5``.
+
+.. versionchangedold:: 1.9.5
+    Always returns an empty string ``""``.
+"""
 
 __all__ = ["SDL", "ver", "vernum", "rev"]
