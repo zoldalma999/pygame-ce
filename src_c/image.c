@@ -36,6 +36,9 @@
 #include <tmmintrin.h>
 #endif
 
+#include "simd_shared.h"
+#include "simd_image.h"
+
 static int
 SaveTGA(SDL_Surface *surface, const char *file, int rle);
 static int
@@ -628,6 +631,46 @@ image_tobytes(PyObject *self, PyObject *arg, PyObject *kwarg)
         return NULL;
     }
     PyBytes_AsStringAndSize(bytes, &data, &len);
+
+    if (PG_FORMAT_BytesPerPixel(format_details) == 4 &&
+        (surf->pitch % 4 == 0) && pitch == byte_width && pg_has_avx2()) {
+        char rindex, gindex, bindex, aindex;
+        int invalid = 0;
+
+        if (!strcmp(format, "RGBX") || !strcmp(format, "RGBA")) {
+            rindex = 0;
+            gindex = 1;
+            bindex = 2;
+            aindex = 3;
+        }
+        else if (!strcmp(format, "ARGB")) {
+            rindex = 1;
+            gindex = 2;
+            bindex = 3;
+            aindex = 0;
+        }
+        else if (!strcmp(format, "BGRA")) {
+            rindex = 2;
+            gindex = 1;
+            bindex = 0;
+            aindex = 3;
+        }
+        else if (!strcmp(format, "ABGR")) {
+            rindex = 3;
+            gindex = 2;
+            bindex = 1;
+            aindex = 0;
+        }
+        else {
+            invalid = 1;
+        }
+
+        if (!invalid) {
+            tobytes_avx2(surf, format_details, flipped, (Uint32 *)data, rindex,
+                         gindex, bindex, aindex);
+            return bytes;
+        }
+    }
 
     if (!strcmp(format, "P")) {
         pgSurface_Lock(surfobj);

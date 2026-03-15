@@ -186,10 +186,18 @@ draw = py.extension_module(
     subdir: pg,
 )
 
+simd_image_avx2 = static_library(
+    'simd_image_avx2',
+    'simd_image_avx2.c',
+    dependencies: pg_base_deps,
+    c_args: simd_avx2_flags + warnings_error,
+)
+
 image = py.extension_module(
     'image',
     'image.c',
     c_args: warnings_error,
+    link_with: [simd_image_avx2],
     dependencies: pg_base_deps,
     install: true,
     subdir: pg,
